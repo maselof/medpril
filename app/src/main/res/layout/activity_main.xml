@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,17 +9,6 @@
     tools:context=".MainActivity"
     tools:deviceIds="wear">
 
-    <TextView
-        android:id="@+id/app_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <!-- Shown at startup. -->
     <ProgressBar
         android:id="@+id/progress"
         android:layout_width="wrap_content"
@@ -31,18 +20,12 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Views to show when heart rate is available on the device. -->
     <TextView
         android:id="@+id/status_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/last_measured_label"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/app_name"
-        app:layout_constraintVertical_chainStyle="packed"
         tools:text="Status: AVAILABLE"
         tools:visibility="visible" />
 
@@ -53,24 +36,7 @@
         android:text="@string/last_measured"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/last_measured_value"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/status_text"
-        tools:visibility="visible" />
-
-    <ImageView
-        android:id="@+id/heart"
-        android:layout_width="@dimen/icon_size"
-        android:layout_height="@dimen/icon_size"
-        android:contentDescription="@null"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/last_measured_value"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/last_measured_value"
-        app:layout_constraintTop_toTopOf="@id/last_measured_value"
-        app:srcCompat="@drawable/ic_heart"
+        android:layout_below="@+id/status_text"
         tools:visibility="visible" />
 
     <TextView
@@ -80,27 +46,22 @@
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
         android:textSize="40sp"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/heart"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/last_measured_label"
+        android:layout_below="@+id/last_measured_label"
         tools:text="60.0"
         tools:visibility="visible" />
 
-    <!-- Views to show when heart rate is not available on the device. -->
-    <ImageView
-        android:id="@+id/broken_heart"
-        android:layout_width="@dimen/icon_size"
-        android:layout_height="@dimen/icon_size"
-        android:contentDescription="@null"
-        android:src="@drawable/ic_broken_heart"
+    <Button
+        android:id="@+id/btn_get_json"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/material_on_background_disabled"
+        android:layout_below="@id/last_measured_value"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:text="@string/get_json"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/not_available"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/app_name"
-        app:layout_constraintVertical_chainStyle="packed" />
-
+        tools:visibility="visible"
+        android:onClick="getjson"/>
+    <!-- when heart rate is not available -->
     <TextView
         android:id="@+id/not_available"
         android:layout_width="wrap_content"
@@ -112,5 +73,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/broken_heart" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        tools:visivlity="visible"/>
+</RelativeLayout>

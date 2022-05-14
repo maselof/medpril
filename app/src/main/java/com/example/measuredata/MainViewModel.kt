@@ -11,9 +11,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-/**
- * Holds most of the interaction logic and UI state for the app.
- */
+
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val healthServicesManager: HealthServicesManager
@@ -29,8 +27,6 @@ class MainViewModel @Inject constructor(
     val heartRateBpm: StateFlow<Double> = _heartRateBpm
 
     init {
-        // Check that the device has the heart rate capability and progress to the next state
-        // accordingly.
         viewModelScope.launch {
             _uiState.value = if (healthServicesManager.hasHeartRateCapability()) {
                 UiState.HeartRateAvailable

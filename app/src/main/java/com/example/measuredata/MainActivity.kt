@@ -11,11 +11,8 @@ import androidx.lifecycle.lifecycleScope
 import com.example.measuredata.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import android.view.View
 
-/**
- * Activity displaying the app UI. Notably, this binds data from [MainViewModel] to views on screen,
- * and performs the permission check when enabling measure data.
- */
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
@@ -35,10 +32,6 @@ class MainActivity : AppCompatActivity() {
                 when (result) {
                     true -> {
                         Log.i(TAG, "Body sensors permission granted")
-                        // Only measure while the activity is at least in STARTED state.
-                        // MeasureClient provides frequent updates, which requires increasing the
-                        // sampling rate of device sensors, so we must be careful not to remain
-                        // registered any longer than necessary.
                         lifecycleScope.launchWhenStarted {
                             viewModel.measureHeartRate()
                         }
@@ -47,7 +40,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-        // Bind viewmodel state to the UI.
+
         lifecycleScope.launchWhenStarted {
             viewModel.uiState.collect {
                 updateViewVisiblity(it)
@@ -70,21 +63,22 @@ class MainActivity : AppCompatActivity() {
         permissionLauncher.launch(android.Manifest.permission.BODY_SENSORS)
     }
 
+
     private fun updateViewVisiblity(uiState: UiState) {
         (uiState is UiState.Startup).let {
             binding.progress.isVisible = it
         }
-        // These views are visible when heart rate capability is not available.
         (uiState is UiState.HeartRateNotAvailable).let {
-            binding.brokenHeart.isVisible = it
             binding.notAvailable.isVisible = it
         }
-        // These views are visible when the capability is available.
         (uiState is UiState.HeartRateAvailable).let {
             binding.statusText.isVisible = it
             binding.lastMeasuredLabel.isVisible = it
             binding.lastMeasuredValue.isVisible = it
-            binding.heart.isVisible = it
+            binding.btnGetJson.isVisible = it
         }
+    }
+    //Обработка кнопки
+    fun getjson(view: View) {
     }
 }
